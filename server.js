@@ -20,7 +20,35 @@ app.get('/api/v1/essentials', (req, res) => {
       res.status(200).json(items)
     })
     .catch(error => {
-      res.status(400).send(`Error: ${error}`)
+      res.status(400).json(`Error: ${error}`)
+    })
+})
+
+function verifyDelete(req, res, next) {
+  const { id } = req.params
+
+  database('mars-essentials').where('id', id).select()
+    .then(item => {
+      if (!item) {
+        res.status(400).send(`Could not find item with id ${id}`)
+      } else {
+        next()
+      }
+    })
+    .catch(error => {
+      res.status(400).json(`Error: ${error}`)
+    })
+}
+
+app.delete('/api/v1/essentials/:id', verifyDelete, (req, res) => {
+  const { id } = req.params
+
+  database('mars-essentials').where('id', id).select().del()
+    .then(item => {
+      res.status(201).send('Item deleted!')
+    })
+    .catch(error => {
+      res.status(400).json(`Error: ${error}`)
     })
 })
 
