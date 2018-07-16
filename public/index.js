@@ -1,4 +1,6 @@
 const itemList = document.querySelector('ul')
+const submitForm = document.querySelector('.essentials-form')
+submitForm.addEventListener('submit', postItem)
 
 function appInit() {
   getItems()
@@ -33,6 +35,41 @@ function getItems() {
       })
   } catch(error) {
     console.log(error)
+  }
+}
+
+function postItem(e) {
+  e.preventDefault()
+
+  const itemName = document.querySelector('.item-input').value
+
+  let li = document.createElement('li')
+  li.append(itemName)
+  itemList.append(li)
+  let checkbox = document.createElement('input')
+  let deleteButton = document.createElement('button')
+  deleteButton.addEventListener('click', deleteItem)
+  deleteButton.textContent = 'Delete'
+  checkbox.type = "checkbox"
+  li.append(checkbox)
+  li.append(deleteButton)
+  if (itemName.length) {
+    const url = 'http://localhost:3000/api/v1/essentials'
+
+    try {
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          item: itemName,
+          is_packed: false
+        }),
+        headers: {
+        'Content-Type': 'application/json'
+        }
+      }).then(itemId => checkbox.value = itemId)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
