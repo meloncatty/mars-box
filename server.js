@@ -34,6 +34,14 @@ app.post('/api/v1/essentials', (req, res) => {
     })
 })
 
+app.patch('/api/v1/essentials/:id', (req, res) => {
+  const { id } = req.params
+
+  database('mars-essentials').where('id', id).select().update(req.body)
+    .then(() => res.status(201).send('Item updated!'))
+    .catch(error => res.status(400).json(error))
+})
+
 function verifyDelete(req, res, next) {
   const { id } = req.params
 
