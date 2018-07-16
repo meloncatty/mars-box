@@ -24,6 +24,16 @@ app.get('/api/v1/essentials', (req, res) => {
     })
 })
 
+app.post('/api/v1/essentials', (req, res) => {
+  database('mars-essentials').insert(req.body, 'id')
+    .then(item => {
+      res.status(200).json(req.body)
+    })
+    .catch(error => {
+      res.status(400).json(`Error: ${error}`)
+    })
+})
+
 function verifyDelete(req, res, next) {
   const { id } = req.params
 
