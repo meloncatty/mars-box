@@ -39,7 +39,7 @@ app.patch('/api/v1/essentials/:id', (req, res) => {
   const { id } = req.params
 
   database('mars-essentials').where('id', id).select().update(req.body)
-    .then(() => res.status(201).send('Item updated!'))
+    .then(() => res.status(200).send('Item updated!'))
     .catch(error => res.status(400).json(error))
 })
 
@@ -64,7 +64,7 @@ app.delete('/api/v1/essentials/:id', verifyDelete, (req, res) => {
 
   database('mars-essentials').where('id', id).select().del()
     .then(item => {
-      res.status(201).send('Item deleted!')
+      res.status(201)
     })
     .catch(error => {
       res.status(400).json(`Error: ${error}`)
