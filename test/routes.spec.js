@@ -1,4 +1,3 @@
-process.env.NODE_ENV = 'test'
 const chai = require('chai')
 const should = chai.should()
 const chaiHttp = require('chai-http')
@@ -58,6 +57,40 @@ describe('API routes', () => {
           response.body[0].item.should.equal('oxygen tank')
           response.body[0].should.have.property('is_packed')
           response.body[0].is_packed.should.equal(true)
+          done()
+        })
+    })
+  })
+
+  describe('POST /api/v1/essentials', () => {
+    it('should return new item id', done => {
+      chai.request(server)
+        .post('/api/v1/essentials')
+        .send({
+          "item": "solar cells",
+          "is_packed": false,
+          "id": Math.floor((Math.random() * 1000))
+        })
+        .end((err, response) => {
+          response.should.have.status(200)
+          response.body[0].should.have.property('item')
+          response.body[0].item.should.equal('solar cells')
+          response.body[0].should.have.property('is_packed')
+          response.body[0].is_packed.should.equal(false)
+          done()
+        })
+    })
+
+    it('should return status 400 when invalid request body', done => {
+      chai.request(server)
+        .post('/api/v1/essentials')
+        .send({
+          "item": "solar cells",
+          "is_packed": false,
+        })
+        .end((err, response) => {
+          response.should.have.status(400)
+          response.res.text.should.equal('Please include a valid request body')
           done()
         })
     })
