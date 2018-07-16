@@ -26,8 +26,8 @@ app.get('/api/v1/essentials', (req, res) => {
 
 app.post('/api/v1/essentials', (req, res) => {
   database('mars-essentials').insert(req.body, 'id')
-    .then(item => {
-      res.status(200).json(req.body)
+    .then(itemId => {
+      res.status(200).json(itemId)
     })
     .catch(error => {
       res.status(400).json(`Error: ${error}`)
