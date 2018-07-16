@@ -1,4 +1,4 @@
-const itemContainer = document.querySelector('.essentials-item-container')
+const itemList = document.querySelector('ul')
 
 function appInit() {
   getItems()
@@ -9,7 +9,12 @@ function getItems() {
   try {
     fetch(url)
       .then(res => res.json())
-      .then(items => console.log(items))
+      .then(items => {
+        items.forEach(item => {
+          let li = document.createElement('li')
+          itemList.append(item.item, li)
+        })
+      })
   } catch(error) {
     console.log(error)
   }
