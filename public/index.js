@@ -9,7 +9,7 @@ function appInit () {
 }
 
 function getItems () {
-  const url = 'http://localhost:3000/api/v1/essentials'
+  const url = '/api/v1/essentials'
   try {
     fetch(url)
       .then(res => res.json())
@@ -58,7 +58,7 @@ function postItem (e) {
   li.append(checkbox)
   li.append(deleteButton)
   if (itemName.length) {
-    const url = 'http://localhost:3000/api/v1/essentials'
+    const url = '/api/v1/essentials'
 
     try {
       fetch(url, {
@@ -83,7 +83,7 @@ function updatePacked () {
   const itemId = parseInt(this.value)
   const isChecked = this.checked
 
-  const url = `http://localhost:3000/api/v1/essentials/${itemId}`
+  const url = `/api/v1/essentials/${itemId}`
   try {
     fetch(url, {
       method: 'PATCH',
@@ -103,7 +103,7 @@ function updatePacked () {
 function deleteItem () {
   const itemId = parseInt(this.previousSibling.value)
   this.parentNode.remove()
-  const url = `http://localhost:3000/api/v1/essentials/${itemId}`
+  const url = `/api/v1/essentials/${itemId}`
 
   try {
     fetch(url, {
