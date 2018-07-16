@@ -16,15 +16,18 @@ function getItems () {
       .then(items => {
         items.forEach(item => {
           let li = document.createElement('li')
+          let p = document.createElement('p')
           let checkbox = document.createElement('input')
           let deleteButton = document.createElement('button')
           deleteButton.addEventListener('click', deleteItem)
           deleteButton.textContent = 'Delete'
+          deleteButton.classList = 'delete-button'
           checkbox.type = 'checkbox'
           checkbox.value = item.id
           checkbox.addEventListener('click', updatePacked)
           itemList.append(li)
-          li.append(item.item)
+          p.append(item.item)
+          li.append(p)
           const grabListItems = document.querySelectorAll('li')
           grabListItems.forEach(item => {
             item.append(checkbox)
