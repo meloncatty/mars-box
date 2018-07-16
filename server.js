@@ -26,11 +26,12 @@ app.get('/api/v1/essentials', (req, res) => {
 
 app.post('/api/v1/essentials', (req, res) => {
   database('mars-essentials').insert(req.body)
-    .then(itemId => {
-      res.status(200).json(itemId)
+    .then(() => {
+      database('mars-essentials').where('item', req.body.item).select()
+        .then(item => res.status(200).json(item))
     })
     .catch(error => {
-      res.status(400).json(`Error: ${error}`)
+      res.status(400).send('Please include a valid request body')
     })
 })
 
