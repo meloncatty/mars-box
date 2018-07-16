@@ -1,7 +1,7 @@
 
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   return Promise.all([
-    knex.schema.createTable('mars-essentials', function(table) {
+    knex.schema.createTable('mars-essentials', function (table) {
       table.increments('id').primary()
       table.string('item')
       table.boolean('is_packed')
@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
   ])
 }
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.dropTable('mars-essentials')
   ])

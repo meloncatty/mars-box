@@ -1,5 +1,5 @@
 
-exports.seed = function(knex, Promise) {
+exports.seed = function (knex, Promise) {
   return knex('mars-essentials').del()
     .then(function () {
       return knex('mars-essentials').insert([
@@ -9,10 +9,10 @@ exports.seed = function(knex, Promise) {
         {id: 4, item: 'drone', is_packed: true}
       ])
     })
-    .then(function() {
+    .then(function () {
       console.log('Seeding complete!')
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(`Error seeding data: ${error}`)
     })
 }

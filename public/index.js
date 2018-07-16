@@ -1,13 +1,14 @@
+/* global fetch */
 const itemList = document.querySelector('ul')
 const submitForm = document.querySelector('.essentials-form')
 
 submitForm.addEventListener('submit', postItem)
 
-function appInit() {
+function appInit () {
   getItems()
 }
 
-function getItems() {
+function getItems () {
   const url = 'http://localhost:3000/api/v1/essentials'
   try {
     fetch(url)
@@ -19,7 +20,7 @@ function getItems() {
           let deleteButton = document.createElement('button')
           deleteButton.addEventListener('click', deleteItem)
           deleteButton.textContent = 'Delete'
-          checkbox.type = "checkbox"
+          checkbox.type = 'checkbox'
           checkbox.value = item.id
           checkbox.addEventListener('click', updatePacked)
           itemList.append(li)
@@ -35,12 +36,12 @@ function getItems() {
           }
         })
       })
-  } catch(error) {
+  } catch (error) {
     console.log(error)
   }
 }
 
-function postItem(e) {
+function postItem (e) {
   e.preventDefault()
 
   const itemName = document.querySelector('.item-input').value
@@ -52,7 +53,7 @@ function postItem(e) {
   let deleteButton = document.createElement('button')
   deleteButton.addEventListener('click', deleteItem)
   deleteButton.textContent = 'Delete'
-  checkbox.type = "checkbox"
+  checkbox.type = 'checkbox'
   checkbox.addEventListener('click', updatePacked)
   li.append(checkbox)
   li.append(deleteButton)
@@ -67,17 +68,17 @@ function postItem(e) {
           is_packed: false
         }),
         headers: {
-        'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         }
       })
-      .then(itemId => checkbox.value = itemId)
+        .then(itemId => checkbox.value = itemId)
     } catch (error) {
       console.log(error)
     }
   }
 }
 
-function updatePacked() {
+function updatePacked () {
   const itemId = parseInt(this.value)
   const isChecked = this.checked
 
@@ -92,13 +93,13 @@ function updatePacked() {
         'Content-Type': 'application/json'
       }
     })
-    .then(res => res)
-  } catch(error) {
+      .then(res => res)
+  } catch (error) {
     console.log(error)
   }
 }
 
-function deleteItem() {
+function deleteItem () {
   const itemId = parseInt(this.previousSibling.value)
   this.parentNode.remove()
   const url = `http://localhost:3000/api/v1/essentials/${itemId}`
@@ -108,7 +109,7 @@ function deleteItem() {
       method: 'DELETE'
     })
       .then(res => console.log(res))
-  } catch(error) {
+  } catch (error) {
     console.log(error)
   }
 }

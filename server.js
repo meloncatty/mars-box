@@ -42,7 +42,7 @@ app.patch('/api/v1/essentials/:id', (req, res) => {
     .catch(error => res.status(400).json(error))
 })
 
-function verifyDelete(req, res, next) {
+function verifyDelete (req, res, next) {
   const { id } = req.params
 
   database('mars-essentials').where('id', id).select()
