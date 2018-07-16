@@ -25,7 +25,7 @@ app.get('/api/v1/essentials', (req, res) => {
 })
 
 app.post('/api/v1/essentials', (req, res) => {
-  database('mars-essentials').insert(req.body, 'id')
+  database('mars-essentials').insert(req.body)
     .then(itemId => {
       res.status(200).json(itemId)
     })
@@ -73,3 +73,5 @@ app.delete('/api/v1/essentials/:id', verifyDelete, (req, res) => {
 app.listen(app.get('port'), () => {
   console.log(`Sever is running on port ${app.get('port')}.`)
 })
+
+module.exports = app
