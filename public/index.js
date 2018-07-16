@@ -18,7 +18,8 @@ function getItems() {
           deleteButton.textContent = 'Delete'
           checkbox.type = "checkbox"
           checkbox.value = item.id
-          itemList.append(item.item, li)
+          itemList.append(li)
+          li.append(item.item)
           const grabListItems = document.querySelectorAll('li')
           grabListItems.forEach(item => {
             item.append(checkbox)
@@ -37,6 +38,7 @@ function getItems() {
 
 function deleteItem() {
   const itemId = parseInt(this.previousSibling.value)
+  this.parentNode.remove()
   const url = `http://localhost:3000/api/v1/essentials/${itemId}`
 
   try {
@@ -47,7 +49,6 @@ function deleteItem() {
   } catch(error) {
     console.log(error)
   }
-  // appInit()
 }
 
 appInit()
