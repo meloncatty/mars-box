@@ -1,5 +1,6 @@
 const itemList = document.querySelector('ul')
 const submitForm = document.querySelector('.essentials-form')
+
 submitForm.addEventListener('submit', postItem)
 
 function appInit() {
@@ -20,6 +21,7 @@ function getItems() {
           deleteButton.textContent = 'Delete'
           checkbox.type = "checkbox"
           checkbox.value = item.id
+          checkbox.addEventListener('click', updatePacked)
           itemList.append(li)
           li.append(item.item)
           const grabListItems = document.querySelectorAll('li')
@@ -51,6 +53,7 @@ function postItem(e) {
   deleteButton.addEventListener('click', deleteItem)
   deleteButton.textContent = 'Delete'
   checkbox.type = "checkbox"
+  checkbox.addEventListener('click', updatePacked)
   li.append(checkbox)
   li.append(deleteButton)
   if (itemName.length) {
@@ -66,10 +69,32 @@ function postItem(e) {
         headers: {
         'Content-Type': 'application/json'
         }
-      }).then(itemId => checkbox.value = itemId)
+      })
+      .then(itemId => checkbox.value = itemId)
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+function updatePacked() {
+  const itemId = parseInt(this.value)
+  const isChecked = this.checked
+
+  const url = `http://localhost:3000/api/v1/essentials/${itemId}`
+  try {
+    fetch(url, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        is_packed: isChecked
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res)
+  } catch(error) {
+    console.log(error)
   }
 }
 
