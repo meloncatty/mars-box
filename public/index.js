@@ -65,7 +65,8 @@ function postItem (e) {
         method: 'POST',
         body: JSON.stringify({
           item: itemName,
-          is_packed: false
+          is_packed: false,
+          id: Math.floor((Math.random() * 1000))
         }),
         headers: {
           'Content-Type': 'application/json'
