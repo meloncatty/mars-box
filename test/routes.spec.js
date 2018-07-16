@@ -95,4 +95,30 @@ describe('API routes', () => {
         })
     })
   })
+
+  describe('DELETE /api/v1/essentials/:id', done => {
+    it('should return status 201', () => {
+      chai.request(server)
+        .delete('/api/v1/essentials/2')
+        .end((err, response) => {
+          response.should.have.status(201)
+          done()
+        })
+    })
+  })
+
+  describe('PATCH /api/v1/essentials/:id', () => {
+    it('should return success text when successful', done => {
+      chai.request(server)
+        .patch('/api/v1/essentials/2')
+        .send({
+          "is_packed": false
+        })
+        .end((err, response) => {
+          response.should.have.status(200)
+          response.res.text.should.equal('Item updated!')
+          done()
+        })
+    });
+  });
 })
