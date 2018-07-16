@@ -19,6 +19,8 @@ li {
   margin: 15px;
   border: 1px solid #000;
   display: flex;
+  width: 300px;
+  justify-content: space-between;
 }
 
 ul {
@@ -36,7 +38,8 @@ ul {
 }
 
 .delete-button {
-  align-self: flex-end;
+  align-self: center;
+  /* margin-left: 50px; */
 }
 
 .item-input {
@@ -48,8 +51,9 @@ ul {
   outline: none;
 }
 
-.packed {
-  display: block;
+input[type='checkbox'] {
+  align-self: center;
+  margin-right: 100px;
 }
 
 .submit-button {
