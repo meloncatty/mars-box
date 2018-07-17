@@ -40,7 +40,7 @@ app.patch('/api/v1/essentials/:id', (req, res) => {
 
   database('mars-essentials').where('id', id).select().update(req.body)
     .then(() => res.status(200).send('Item updated!'))
-    .catch(error => res.status(400).json(error))
+    .catch(error => res.status(400).send('Please provide a valid id to update'))
 })
 
 function verifyDelete (req, res, next) {

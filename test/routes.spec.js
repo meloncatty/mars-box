@@ -5,7 +5,6 @@ const server = require('../server')
 const environment = process.env.NODE_ENV || 'test'
 const configuration = require('../knexfile')[environment]
 const knex = require('knex')(configuration)
-
 chai.use(chaiHttp)
 
 describe('Client routes', () => {
@@ -95,17 +94,6 @@ describe('API routes', () => {
     })
   })
 
-  describe('DELETE /api/v1/essentials/:id', done => {
-    it('should return status 201', () => {
-      chai.request(server)
-        .delete('/api/v1/essentials/2')
-        .end((err, response) => {
-          response.should.have.status(201)
-          done()
-        })
-    })
-  })
-
   describe('PATCH /api/v1/essentials/:id', () => {
     it('should return success text when successful', done => {
       chai.request(server)
@@ -116,6 +104,19 @@ describe('API routes', () => {
         .end((err, response) => {
           response.should.have.status(200)
           response.res.text.should.equal('Item updated!')
+          done()
+        })
+    })
+
+    it('should return status 400 with bad request', done => {
+      chai.request(server)
+        .patch('/api/v1/essentials/2')
+        .send({
+          'is_not_packed': true
+        })
+        .end((err, response) => {
+          response.should.have.status(400)
+          response.res.text.should.equal('Please provide a valid id to update')
           done()
         })
     })
