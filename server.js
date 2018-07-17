@@ -46,9 +46,9 @@ app.patch('/api/v1/essentials/:id', (req, res) => {
 function verifyDelete (req, res, next) {
   const { id } = req.params
 
-  database('mars-essentials').where('id', id).select()
+  database('mars-essentials').where('id', id)
     .then(item => {
-      if (!item) {
+      if (!item.length) {
         res.status(400).send(`Could not find item with id ${id}`)
       } else {
         next()
@@ -64,9 +64,10 @@ app.delete('/api/v1/essentials/:id', verifyDelete, (req, res) => {
 
   database('mars-essentials').where('id', id).select().del()
     .then(item => {
-      res.status(201)
+      res.status(201).send('Item deleted!')
     })
     .catch(error => {
+      console.log(error)
       res.status(400).json(`Error: ${error}`)
     })
 })
