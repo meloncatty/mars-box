@@ -28,7 +28,6 @@ describe('Client routes', () => {
 })
 
 describe('API routes', () => {
-
   beforeEach((done) => {
     knex.migrate.rollback()
       .then(() => {
@@ -67,9 +66,9 @@ describe('API routes', () => {
       chai.request(server)
         .post('/api/v1/essentials')
         .send({
-          "item": "solar cells",
-          "is_packed": false,
-          "id": Math.floor((Math.random() * 1000))
+          'item': 'solar cells',
+          'is_packed': false,
+          'id': Math.floor((Math.random() * 1000))
         })
         .end((err, response) => {
           response.should.have.status(200)
@@ -85,8 +84,8 @@ describe('API routes', () => {
       chai.request(server)
         .post('/api/v1/essentials')
         .send({
-          "item": "solar cells",
-          "is_packed": false,
+          'item': 'solar cells',
+          'is_packed': false
         })
         .end((err, response) => {
           response.should.have.status(400)
@@ -112,13 +111,13 @@ describe('API routes', () => {
       chai.request(server)
         .patch('/api/v1/essentials/2')
         .send({
-          "is_packed": false
+          'is_packed': false
         })
         .end((err, response) => {
           response.should.have.status(200)
           response.res.text.should.equal('Item updated!')
           done()
         })
-    });
-  });
+    })
+  })
 })
