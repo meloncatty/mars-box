@@ -48,7 +48,6 @@ describe('API routes', () => {
       chai.request(server)
         .get('/api/v1/essentials')
         .end((err, response) => {
-          console.log(response.body)
           response.should.have.status(200)
           response.should.be.json
           response.body.should.be.a('array')
@@ -104,7 +103,7 @@ describe('API routes', () => {
         })
         .end((err, response) => {
           response.should.have.status(200)
-          response.res.text.should.equal('Item updated!')
+          response.res.text.should.equal('Update successful!')
           done()
         })
     })
@@ -128,13 +127,13 @@ describe('API routes', () => {
       chai.request(server)
         .delete('/api/v1/essentials/1')
         .end((err, response) => {
-          response.should.have.status(201)
+          response.should.have.status(200)
           response.res.text.should.equal('Item deleted!')
           done()
         })
     })
 
-    it.only('should return status 400 when unsuccessful', done => {
+    it('should return status 400 when unsuccessful', done => {
       chai.request(server)
         .delete('/api/v1/essentials/90')
         .end((err, response) => {
