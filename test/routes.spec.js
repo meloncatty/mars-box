@@ -79,7 +79,7 @@ describe('API routes', () => {
         })
     })
 
-    it.only('should return status 400 when invalid request body', done => {
+    it('should return status 422 when invalid request body', done => {
       chai.request(server)
         .post('/api/v1/essentials')
         .send({
