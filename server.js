@@ -37,10 +37,10 @@ app.post('/api/v1/essentials', verifyPost, (req, res) => {
   database('mars-essentials').insert(req.body)
     .then(() => {
       database('mars-essentials').where('item', req.body.item).select()
-        .then(item => res.status(200).json(item))
+        .then(item => res.status(201).json(item))
     })
     .catch(error => {
-      res.status(400).send('Please include a valid request body')
+      res.status(500).json(error)
     })
 })
 
