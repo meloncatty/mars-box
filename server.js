@@ -20,7 +20,7 @@ app.get('/api/v1/essentials', (req, res) => {
       res.status(200).json(items)
     })
     .catch(error => {
-      res.status(400).json(`Error: ${error}`)
+      res.status(500).json(error)
     })
 })
 
@@ -73,7 +73,7 @@ function verifyDelete (req, res, next) {
       }
     })
     .catch(error => {
-      res.status(500).json(`Error: ${error}`)
+      res.status(500).json(error)
     })
 }
 
@@ -86,7 +86,7 @@ app.delete('/api/v1/essentials/:id', verifyDelete, (req, res) => {
     })
     .catch(error => {
       console.log(error)
-      res.status(500).json(`Error: ${error}`)
+      res.status(500).json(error)
     })
 })
 
