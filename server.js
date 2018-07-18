@@ -67,13 +67,13 @@ function verifyDelete (req, res, next) {
   database('mars-essentials').where('id', id)
     .then(item => {
       if (!item.length) {
-        res.status(400).send(`Could not find item with id ${id}`)
+        res.status(404).send(`Could not find item with id ${id}`)
       } else {
         next()
       }
     })
     .catch(error => {
-      res.status(400).json(`Error: ${error}`)
+      res.status(500).json(`Error: ${error}`)
     })
 }
 
@@ -82,11 +82,11 @@ app.delete('/api/v1/essentials/:id', verifyDelete, (req, res) => {
 
   database('mars-essentials').where('id', id).select().del()
     .then(item => {
-      res.status(200).send('Item deleted!')
+      res.sendStatus(204)
     })
     .catch(error => {
       console.log(error)
-      res.status(400).json(`Error: ${error}`)
+      res.status(500).json(`Error: ${error}`)
     })
 })
 
