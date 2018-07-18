@@ -24,7 +24,16 @@ app.get('/api/v1/essentials', (req, res) => {
     })
 })
 
-app.post('/api/v1/essentials', (req, res) => {
+const verifyPost = (req, res, next) => {
+
+  if (!req.body.hasOwnProperty('is_packed') || !req.body.item || !req.body.id) {
+    res.status(422).send('Please include a valid request body')
+  } else {
+    next()
+  }
+}
+
+app.post('/api/v1/essentials', verifyPost, (req, res) => {
   database('mars-essentials').insert(req.body)
     .then(() => {
       database('mars-essentials').where('item', req.body.item).select()
