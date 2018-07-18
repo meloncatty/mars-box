@@ -108,15 +108,15 @@ describe('API routes', () => {
         })
     })
 
-    it('should return status 400 with bad request', done => {
+    it.only('should return status 422 with bad request', done => {
       chai.request(server)
         .patch('/api/v1/essentials/2')
         .send({
           'is_not_packed': true
         })
         .end((err, response) => {
-          response.should.have.status(400)
-          response.res.text.should.equal('Please provide a valid id to update')
+          response.should.have.status(422)
+          response.res.text.should.equal('Please include a valid request body')
           done()
         })
     })
