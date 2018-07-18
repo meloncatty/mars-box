@@ -112,7 +112,7 @@ function deleteItem () {
     fetch(url, {
       method: 'DELETE'
     })
-    .then(res => console.log(res))
+      .then(res => console.log(res))
   } catch (error) {
     console.log(error)
   }

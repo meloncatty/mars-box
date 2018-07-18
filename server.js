@@ -25,7 +25,6 @@ app.get('/api/v1/essentials', (req, res) => {
 })
 
 const verifyPost = (req, res, next) => {
-
   if (!req.body.hasOwnProperty('is_packed') || !req.body.item || !req.body.id) {
     res.status(422).send('Please include a valid request body')
   } else {
@@ -45,7 +44,6 @@ app.post('/api/v1/essentials', verifyPost, (req, res) => {
 })
 
 const verifyPatch = (req, res, next) => {
-
   if (!req.body.hasOwnProperty('is_packed')) {
     res.status(422).send('Please include a valid request body')
   } else {
