@@ -44,7 +44,16 @@ app.post('/api/v1/essentials', verifyPost, (req, res) => {
     })
 })
 
-app.patch('/api/v1/essentials/:id', (req, res) => {
+const verifyPatch = (req, res, next) => {
+
+  if (!req.body.hasOwnProperty('is_packed')) {
+    res.status(422).send('Please include a valid request body')
+  } else {
+    next()
+  }
+}
+
+app.patch('/api/v1/essentials/:id', verifyPatch, (req, res) => {
   const { id } = req.params
 
   database('mars-essentials').where('id', id).select().update(req.body)
