@@ -108,7 +108,7 @@ describe('API routes', () => {
         })
     })
 
-    it.only('should return status 422 with bad request', done => {
+    it('should return status 422 with bad request', done => {
       chai.request(server)
         .patch('/api/v1/essentials/2')
         .send({
@@ -123,12 +123,11 @@ describe('API routes', () => {
   })
 
   describe('DELETE /api/v1/essentials/:id', () => {
-    it('should return status 201 when successful', done => {
+    it('should return status 204 when successful', done => {
       chai.request(server)
         .delete('/api/v1/essentials/1')
         .end((err, response) => {
-          response.should.have.status(200)
-          response.res.text.should.equal('Item deleted!')
+          response.should.have.status(204)
           done()
         })
     })
@@ -137,7 +136,7 @@ describe('API routes', () => {
       chai.request(server)
         .delete('/api/v1/essentials/90')
         .end((err, response) => {
-          response.should.have.status(400)
+          response.should.have.status(404)
           response.res.text.should.equal('Could not find item with id 90')
           done()
         })
