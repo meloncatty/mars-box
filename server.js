@@ -85,7 +85,6 @@ app.delete('/api/v1/essentials/:id', verifyDelete, (req, res) => {
       res.sendStatus(204)
     })
     .catch(error => {
-      console.log(error)
       res.status(500).json(error)
     })
 })
