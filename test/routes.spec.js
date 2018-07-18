@@ -132,7 +132,7 @@ describe('API routes', () => {
         })
     })
 
-    it('should return status 400 when unsuccessful', done => {
+    it('should return status 404 when unsuccessful', done => {
       chai.request(server)
         .delete('/api/v1/essentials/90')
         .end((err, response) => {
