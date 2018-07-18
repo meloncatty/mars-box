@@ -5,7 +5,6 @@ const server = require('../server')
 const environment = process.env.NODE_ENV || 'test'
 const configuration = require('../knexfile')[environment]
 const knex = require('knex')(configuration)
-
 chai.use(chaiHttp)
 
 describe('Client routes', () => {
@@ -28,7 +27,6 @@ describe('Client routes', () => {
 })
 
 describe('API routes', () => {
-
   beforeEach((done) => {
     knex.migrate.rollback()
       .then(() => {
@@ -67,12 +65,12 @@ describe('API routes', () => {
       chai.request(server)
         .post('/api/v1/essentials')
         .send({
-          "item": "solar cells",
-          "is_packed": false,
-          "id": Math.floor((Math.random() * 1000))
+          'item': 'solar cells',
+          'is_packed': false,
+          'id': Math.floor((Math.random() * 1000))
         })
         .end((err, response) => {
-          response.should.have.status(200)
+          response.should.have.status(201)
           response.body[0].should.have.property('item')
           response.body[0].item.should.equal('solar cells')
           response.body[0].should.have.property('is_packed')
@@ -81,27 +79,16 @@ describe('API routes', () => {
         })
     })
 
-    it('should return status 400 when invalid request body', done => {
+    it('should return status 422 when invalid request body', done => {
       chai.request(server)
         .post('/api/v1/essentials')
         .send({
-          "item": "solar cells",
-          "is_packed": false,
+          'item': 'solar cells',
+          'is_packed': false
         })
         .end((err, response) => {
-          response.should.have.status(400)
+          response.should.have.status(422)
           response.res.text.should.equal('Please include a valid request body')
-          done()
-        })
-    })
-  })
-
-  describe('DELETE /api/v1/essentials/:id', done => {
-    it('should return status 201', () => {
-      chai.request(server)
-        .delete('/api/v1/essentials/2')
-        .end((err, response) => {
-          response.should.have.status(201)
           done()
         })
     })
@@ -112,13 +99,47 @@ describe('API routes', () => {
       chai.request(server)
         .patch('/api/v1/essentials/2')
         .send({
-          "is_packed": false
+          'is_packed': false
         })
         .end((err, response) => {
           response.should.have.status(200)
-          response.res.text.should.equal('Item updated!')
+          response.res.text.should.equal('Update successful!')
           done()
         })
-    });
-  });
+    })
+
+    it('should return status 422 with bad request', done => {
+      chai.request(server)
+        .patch('/api/v1/essentials/2')
+        .send({
+          'is_not_packed': true
+        })
+        .end((err, response) => {
+          response.should.have.status(422)
+          response.res.text.should.equal('Please include a valid request body')
+          done()
+        })
+    })
+  })
+
+  describe('DELETE /api/v1/essentials/:id', () => {
+    it('should return status 204 when successful', done => {
+      chai.request(server)
+        .delete('/api/v1/essentials/1')
+        .end((err, response) => {
+          response.should.have.status(204)
+          done()
+        })
+    })
+
+    it('should return status 404 when unsuccessful', done => {
+      chai.request(server)
+        .delete('/api/v1/essentials/90')
+        .end((err, response) => {
+          response.should.have.status(404)
+          response.res.text.should.equal('Could not find item with id 90')
+          done()
+        })
+    })
+  })
 })
